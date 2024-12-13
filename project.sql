@@ -1,0 +1,27 @@
+-- Create the PRODUCT table
+CREATE TABLE PRODUCT (
+    ProductID NUMBER PRIMARY KEY,
+    ProductName VARCHAR2(50) NOT NULL,
+    Price NUMBER(10, 2) CHECK (Price > 0)
+);
+
+-- Create the CUSTOMER table
+CREATE TABLE CUSTOMER (
+    CustomerID NUMBER PRIMARY KEY,
+    CustomerName VARCHAR2(50) NOT NULL,
+    Address VARCHAR2(100)
+);
+
+-- Create the ORDERS table
+CREATE TABLE ORDERS (
+    OrderID NUMBER PRIMARY KEY,
+    CustomerID NUMBER,
+    ProductID NUMBER,
+    Quantity NUMBER CHECK (Quantity > 0),
+    CONSTRAINT fk_customer FOREIGN KEY (CustomerID) REFERENCES CUSTOMER(CustomerID),
+    CONSTRAINT fk_product FOREIGN KEY (ProductID) REFERENCES PRODUCT(ProductID)
+);
+
+ALTER TABLE PRODUCT ADD Category VARCHAR2(20);
+
+ALTER TABLE ORDERS ADD OrderDate DATE DEFAULT SYSDATE;
